@@ -20,7 +20,7 @@
 #include <Arduino.h>
 #include <EventTimer.h>
 
-#define INPUTPIN 5
+#define INPUTPIN 19
 
 #if defined(ESP32) || defined(ESP8266) || defined(ESP_PLATFORM)
 #define INTERRUPT_SAFE IRAM_ATTR
@@ -58,6 +58,7 @@ bool showAcc = true;
 // connection.
 
 void DecodePacket(int inputPacket, bool isDifferentPacket) {
+  Serial.println("Decoding packet!");
   byte instrByte1;
   byte decoderType;  // 0=Loc, 1=Acc
   unsigned int decoderAddress;
@@ -97,18 +98,22 @@ void DecodePacket(int inputPacket, bool isDifferentPacket) {
       if (instrByte1 & 0B10000000) {  // Basic Accessory
         decoderAddress = (((~instrByte1) & 0B01110000) << 2) + decoderAddress;
         byte port = (instrByte1 & 0B00000110) >> 1;
-        // sbTemp.print(F("Acc "));
-        // sbTemp.print((decoderAddress - 1) * 4 + port + 1);
-        // sbTemp.print(' ');
+        Serial.print(F("Acc "));
+        Serial.print((decoderAddress - 1) * 4 + port + 1);
+        Serial.print(' ');
         // sbTemp.print(decoderAddress);
         // sbTemp.print(F(":"));
         // sbTemp.print(port);
         // sbTemp.print(' ');
         // sbTemp.print(bitRead(instrByte1, 3));
         if (bitRead(instrByte1, 0)) {
+          digitalWrite(BUILTIN_LED, 1);
+          Serial.println(F(" On"));
         }
         // sbTemp.print(F(" On"));
         else {
+          digitalWrite(BUILTIN_LED, 0);
+          Serial.println(F(" Off"));
         }
         // sbTemp.print(F(" Off"));
       } else {  // Accessory Extended NMRA spec is not clear about address and
@@ -405,7 +410,9 @@ bool INTERRUPT_SAFE capture(unsigned long halfBitLengthTicks) {
 }
 
 void setup() {
+  Serial.begin(115200);
   pinMode(INPUTPIN, INPUT_PULLUP);
+  pinMode(BUILTIN_LED, OUTPUT);
   if (!EventTimer.inputCaptureMode()) {
     // Output health warning...
     Serial.println(
@@ -420,6 +427,8 @@ void setup() {
     while (1)
       ;
   }  // put your setup code here, to run once:
+  Serial.println("SETUP done!");
+  digitalWrite(BUILTIN_LED, 1);
 }
 
 void loop() {
