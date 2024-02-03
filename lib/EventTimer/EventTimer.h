@@ -25,7 +25,7 @@
 
 #if defined(ARDUINO_UNO_NANO) || defined(ARDUINO_AVR_MEGA2560)
   #include "EventTimer_AtMega.h"
-#elif defined(SOC_MCPWM_SUPPORTED)
+#elif defined(ESP_PLATFORM) && defined(SOC_MCPWM_SUPPORTED)
   #include "EventTimer_ESP32.h"
 #else
   #include "EventTimer_default.h"
