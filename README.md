@@ -19,10 +19,10 @@ and follow the [example](./examples/).
 #include <Arduino.h>
 #include <DccAccessoryDecoder.h>
 
-void onAccessoryPacket(unsigned int decoderAddress, bool enabled) {
+void onAccessoryPacket(unsigned int linearDecoderAddress, bool enabled) {
   digitalWrite(BUILTIN_LED, enabled ? 1 : 0);
   Serial.print("Change in Accessory ");
-  Serial.print(decoderAddress);
+  Serial.print(linearDecoderAddress);
   Serial.print(" -> ");
   Serial.println(enabled);
 }

@@ -23,7 +23,7 @@
 #include <Arduino.h>
 #include "EventTimer.h"
 
-typedef void AccessoryPacketHandler(unsigned int decoderAddress, bool enabled);
+typedef void AccessoryPacketHandler(unsigned int linearDecoderAddress, bool enabled);
 
 bool IRAM_ATTR DccAccessoryDecoderCaptureWrapper(unsigned long halfBitLengthTicks);
 
@@ -293,16 +293,13 @@ class DccAccessoryDecoderClass {
       if (instrByte1 & 0B10000000) {  // Basic Accessory
         decoderAddress = (((~instrByte1) & 0B01110000) << 2) + decoderAddress;
         byte port = (instrByte1 & 0B00000110) >> 1;
-        Serial.print(F("Acc "));
-        Serial.print((decoderAddress - 1) * 4 + port + 1);
-        Serial.print(' ');
         if (bitRead(instrByte1, 0)) {
           if (accessoryPacketHandler != nullptr) {
-            accessoryPacketHandler(decoderAddress, true);
+            accessoryPacketHandler((decoderAddress - 1) * 4 + port + 1, true);
           }
         } else {
           if (accessoryPacketHandler != nullptr) {
-            accessoryPacketHandler(decoderAddress, false);
+            accessoryPacketHandler((decoderAddress - 1) * 4 + port + 1, false);
           }
         }
       } else {  // Accessory Extended NMRA spec is not clear about address and
