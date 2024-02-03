@@ -1,6 +1,6 @@
 /* Copyright (c) 2024 Christian Hartinger
- * Based on DCCInspector-EX, Neil McKechnie, 2021
- * Based on DCC_Sniffer, Ruud Boer, October 2015
+ * Parts based on on DCCInspector-EX, Neil McKechnie, 2021
+ * Parts based on on DCC_Sniffer, Ruud Boer, October 2015
  *
  * This Library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
