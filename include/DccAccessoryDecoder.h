@@ -23,7 +23,7 @@
 #include <Arduino.h>
 #include "EventTimer.h"
 
-typedef void AccessoryPacketHandler(unsigned int decoderAddress, bool thrown);
+typedef void AccessoryPacketHandler(unsigned int decoderAddress, bool enabled);
 
 bool IRAM_ATTR DccAccessoryDecoderCaptureWrapper(unsigned long halfBitLengthTicks);
 

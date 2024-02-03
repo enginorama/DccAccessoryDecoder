@@ -1,12 +1,19 @@
+/*
+ * Example: Builtin Led Accessory
+ *
+ * Switches the builtin LED state to the last recieved accessory value and outputs the details to Serial.
+ * Listens to all addresses
+ */
+
 #include <Arduino.h>
 #include <DccAccessoryDecoder.h>
 
-void onAccessoryPacket(unsigned int decoderAddress, bool thrown) {
-  digitalWrite(BUILTIN_LED, thrown ? 1 : 0);
+void onAccessoryPacket(unsigned int decoderAddress, bool enabled) {
+  digitalWrite(BUILTIN_LED, enabled ? 1 : 0);
   Serial.print("Change in Accessory ");
   Serial.print(decoderAddress);
   Serial.print(" -> ");
-  Serial.println(thrown);
+  Serial.println(enabled);
 }
 
 void setup() {
