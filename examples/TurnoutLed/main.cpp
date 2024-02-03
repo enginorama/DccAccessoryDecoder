@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "./DccAccessoryDecoder.h"
+#include <DccAccessoryDecoder.h>
 
 void onAccessoryPacket(unsigned int decoderAddress, bool thrown) {
   digitalWrite(BUILTIN_LED, thrown ? 1 : 0);
@@ -12,6 +12,7 @@ void onAccessoryPacket(unsigned int decoderAddress, bool thrown) {
 void setup() {
   Serial.begin(115200);
   DccAccessoryDecoder.begin(19, onAccessoryPacket);
+  Serial.println("Start sending turnout commands.");
 }
 
 void loop() {

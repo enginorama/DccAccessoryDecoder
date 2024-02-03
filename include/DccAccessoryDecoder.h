@@ -21,7 +21,7 @@
 #define DCC_ACCESSORY_DECODER
 
 #include <Arduino.h>
-#include <EventTimer.h>
+#include "EventTimer.h"
 
 typedef void AccessoryPacketHandler(unsigned int decoderAddress, bool thrown);
 
